@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title> exerciseAPI</title>
+  <style>
+      #map {
+          height: 100%;
+      }
+
+      /* Optional: Makes the sample page fill the window. */
+      html,
+      body {
+          height: 100%;
+          margin: 0;
+          padding: 0;
+      }
+
+  </style>
+  <script>
+      function initMap() {
+        
+          // The location of Uluru
+          const uluru = { lat: 10.845875071628608, lng: 106.79462257850858};
+
+          const uluru1 = { lat: 10.843468386635465,lng: 106.7954253803925};
+
+          // The map, centered at Uluru
+          const map = new google.maps.Map(document.getElementById("map"), {
+              zoom: 16,
+              center: uluru,
+          });
+          // The marker, positioned at Uluru
+          const marker = new google.maps.Marker({
+              position: uluru,
+              map: map,
+              //   animation: google.maps.Animation.DROP,
+
+              animation: google.maps.Animation.BOUNCE,
+              icon: {
+                  url: "https://utc2.edu.vn/media/images/notintuc.png",
+                  scaledSize: { width: 50, height: 50 }
+              }
+          });
+
+          const marker1 = new google.maps.Marker({
+              position: uluru1,
+              map: map,
+              //   animation: google.maps.Animation.DROP,
+
+              animation: google.maps.Animation.BOUNCE,
+              icon: {
+                  url: "\avata_me.jpg",
+                  scaledSize: { width: 50, height: 60 }
+              }
+          });
+       
+
+          const directionsService = new google.maps.DirectionsService();
+          const directionsRenderer = new google.maps.DirectionsRenderer();
+         directionsRenderer.setMap(map);
+
+
+
+          var request = {
+              origin: "451 Lê Văn Việt, Tăng Nhơn Phú A, thành phố Thủ Đức, Thành phố Hồ Chí Minh, Việt Nam",
+              destination: "Kí Túc Xã Đại Học Giao Thông Vận Tải Phiên Hiệu,Tăng Nhơn Phú A, Quận 9, Thành phố Hồ Chí Minh, Việt Nam",
+              travelMode: 'WALKING'
+          };
+          directionsService.route(request, function (response, status) {
+              if (status == 'OK') {
+                  directionsRenderer.setDirections(response);
+            
+              }
+          });
+
+          marker.addListener("click", () => {
+              var infowindow = new google.maps.InfoWindow({
+                  // nội dung của InfoWindow
+                  content: "Trường Đại học Giao thông vận tải là một trường đại học công lập đào tạo chuyên ngành <br> các lãnh vực về kỹ thuật giao thông vận tải - kinh tế của Việt Nam."
+              });
+
+              infowindow.open(map, marker);
+          });
+          marker1.addListener("click", () => {
+              var infowindow = new google.maps.InfoWindow({
+                  // nội dung của InfoWindow
+                  content: "MSV: 5951071117 <br> Name: Nguyen Anh Tuan <br> Class: IT K59 <br> <br> Date of birth:20/10/2000 <br> Fb: fb.com/AnhTuan20102000  <br> Email: 5951071117@st.utc2.edu.vn"
+              });
+
+              infowindow.open(map, marker1);
+          
+          });
+
+      }
+
+
+  </script>
+   
+    <!-- jsFiddle will insert css and js -->
+</head>
+
+<body>
+    <div id="map"></div>
+    <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIwzALxUPNbatRBj3Xi1Uhp0fFzwWNBkE&callback=initMap&libraries=&v=weekly"
+            async></script>
+</body>
+
+</html>
